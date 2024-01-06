@@ -2,20 +2,23 @@ import Container from "@/app/components/Container";
 import ListingCard from "@/app/components/listings/ListingCard";
 import EmptyState from "@/app/components/EmptyState";
 
-import getListings, { 
-  IListingsParams
-} from "@/app/actions/getListings";
+import getListings, { IListingsParams } from "@/app/actions/getListings";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import ClientOnly from "./components/ClientOnly";
+import React from "react";
+
+
 
 interface HomeProps {
   searchParams: IListingsParams
 };
 
+export const dynamic = 'force-dynamic'
+
 const Home = async ({ searchParams }: HomeProps) => {
   const listings = await getListings(searchParams);
   const currentUser = await getCurrentUser();
-
+  
   if (listings.length === 0) {
     return (
       <ClientOnly>
@@ -23,7 +26,7 @@ const Home = async ({ searchParams }: HomeProps) => {
       </ClientOnly>
     );
   }
-
+  
   // throw new Error('Something went wrong');
 
   return (
